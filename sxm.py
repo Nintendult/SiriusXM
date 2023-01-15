@@ -563,7 +563,7 @@ def start_httpd(handler):
 
 
 class SiriusXMRipper(object):
-    DEFAULT_BITRATE = "160k"
+    DEFAULT_BITRATE = "320k"
 
     def __init__(self, handler, args):
         self.handler = handler
@@ -710,7 +710,7 @@ class SiriusXMRipper(object):
                         time.sleep(1)
 
                     self.proc = None
-                    self.tag_file(f"{self.output_directory}/{self.current_filename}")
+                    #self.tag_file(f"{self.output_directory}/{self.current_filename}")
 
             if self.should_record_episode(episode):
                 if (
@@ -725,14 +725,14 @@ class SiriusXMRipper(object):
     def rip_episode(self, episode):
         try:
             filename = time.strftime(
-                "%Y-%m-%d_%H_%M_%S_{}.mp3".format(
+                "%Y-%m-%d_%H_%M_%S_{}.aac".format(
                     "_".join(episode["mediumTitle"].split())
                 )
             )
             self.current_filename = filename
 
-            cmd = "ffmpeg -i http://127.0.0.1:8888/{}.m3u8 -acodec libmp3lame -ac 2 -ab {} {}/{}".format(
-                self.channel, self.bitrate, self.output_directory, filename
+            cmd = "ffmpeg"ffmpeg -i http://127.0.0.1:8888/{}.m3u8 -vn -acodec copy {}/{}".format(
+                self.channel, self.output_directory, filename
             )
 
             self.handler.sxm.log("Executing: {}".format(cmd))
@@ -745,7 +745,7 @@ class SiriusXMRipper(object):
                 "Exception occurred in Ripper.rip_stream: {}".format(e)
             )
             self.handler.sxm.log("Tagging file before recovering stream..")
-            self.tag_file(f"{self.output_directory}/{self.current_filename}")
+            #self.tag_file(f"{self.output_directory}/{self.current_filename}")
 
     def tag_file(self, filename):
         if self.config == {}:
