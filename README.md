@@ -1,7 +1,7 @@
 # SiriusXM
 
-This fork has been modified to copy the AAC audio directly instead of converting to MP3,
-allowing for no quality loss from what is broadcast. The below readme is unmodified.
+*This fork has been modified to copy the AAC audio directly instead of converting to MP3,
+allowing for no quality loss from what is broadcast. The below readme is unmodified.*
 
 This script creates a server that serves HLSstreams for SiriusXM channels.
 With an optional configuration file, the recording mode can record shows from
