@@ -1,12 +1,10 @@
 # SiriusXM
 
 *This fork has been modified to copy the AAC audio directly instead of converting to MP3,
-allowing for no quality loss from what is broadcast. ID3 tags are not available.
-The below readme is unmodified.*
+allowing for no quality loss from what is broadcast. ID3 tags are not available.*
 
 This script creates a server that serves HLSstreams for SiriusXM channels.
-With an optional configuration file, the recording mode can record shows from
-specific channels and even populate ID3 tags on the output file for you.
+The recording mode can record shows from specific channels at source quality.
 
 #### Requirements
 Python libraries:
@@ -33,44 +31,6 @@ export SIRIUSXM_USER="username"
 export SIRIUSXM_PASS="password"
 ```
 
-If you wish to record shows, read this section
-##### Example configuration
-
-The following is an example `config.json`
-```json
-{
-  "bitrate": "160k",
-  "shows": [
-    "Soul Assassins"
-  ],
-  "tags": {
-    "DJ_Muggs_&_Ern_D": {
-        "artist": "DJ Muggs & Ern Dogg",
-        "album": "Soul Assassins Radio",
-        "genre": "Hip-Hop",
-        "track_count": 1
-      }
-  }
-}
-```
-The `bitrate` (required) can be whatever you wish (i.e. 128k, 192k, 256k). Keep in mind
-that a higher bitrate equals a higher file size.
-
-Your `show` (optional) names are matched using a case insensitive regular expression, so you only need to
-match the title of your show partially. 
-
-The `tags` (optional) section uses the short title
-from the XM API as the key for tagging data. You can get this from the API 
-yourself or just add it after you've added a show (the short title is in the
-filename). Each entry in the tags list will be matched on the short
-title and your MP3 file will be tagged with whatever you enter for
-artist, album and genre.
-
-If you're just addin ga new entry to the tags list, set the track_count
-to 0. The tagging code will increment this value for each new occurrence
-of the show.
-
-
 ## Usage
 #### Simple HLS server
 `python sxm.py -u myuser -p mypassword`
@@ -82,8 +42,7 @@ the channel name, ID, or Sirius channel number.
 #### Start the server in ripping mode
 `python sxm.py -u myuser -p mypassword -c channel -r`
 
-Use the configuration json (`config.json`) to specify bitrate, programs
-to record and tagging details. Shows are dumped locally using the short title
+Shows are dumped locally using the short title
 of the show which was recorded (i.e. `20180704180000-My_Program.mp3`)
 
 Tagging occurs once the ffmpeg stream has been closed.
