@@ -573,14 +573,15 @@ class SiriusXMRipper(object):
         self.proc = None
         self.completed_files = []
 
-        try:
-            if args.file:
-                self.config = json.load(open(args.file, "r"))
-            else:
-                self.config = json.load(open("config.json"))
-        except Exception as e:
-            self.handler.sxm.log(f"\033[0;31mWARNING: No config file specified and no default config.json found in relative script path -- entering default mode; bitrate: {self.DEFAULT_BITRATE}\033[0m")
-            self.config = {}
+        #try:
+        #    if args.file:
+        #        self.config = json.load(open(args.file, "r"))
+        #    else:
+        #        self.config = json.load(open("config.json"))
+        #except Exception as e:
+        #    self.handler.sxm.log(f"\033[0;31mWARNING: No config file specified and no default config.json found in relative script path -- entering default mode; bitrate: {self.DEFAULT_BITRATE}\033[0m")
+        #    self.config = {}
+        self.config = {}
 
         self.bitrate = self.config.get("bitrate", self.DEFAULT_BITRATE)
         self.recorded_shows = self.config.get("shows", [])
@@ -710,7 +711,7 @@ class SiriusXMRipper(object):
                         time.sleep(1)
 
                     self.proc = None
-                    #self.tag_file(f"{self.output_directory}/{self.current_filename}")
+                   # self.tag_file(f"{self.output_directory}/{self.current_filename}")
 
             if self.should_record_episode(episode):
                 if (
@@ -731,7 +732,7 @@ class SiriusXMRipper(object):
             )
             self.current_filename = filename
 
-            cmd = "ffmpeg"ffmpeg -i http://127.0.0.1:8888/{}.m3u8 -vn -acodec copy {}/{}".format(
+            cmd = "ffmpeg -i http://127.0.0.1:8888/{}.m3u8 -vn -acodec copy {}/{}".format(
                 self.channel, self.output_directory, filename
             )
 
@@ -761,7 +762,7 @@ class SiriusXMRipper(object):
         date_regex = re.compile("(\d{4})-(\d{2})-(\d{2})")
         track_parts = defaultdict(int)
 
-        if not filename.endswith(".mp3"):
+        if not filename.endswith(".aac"):
             return
 
         playlist_match = playlist_regex.findall(filename)
